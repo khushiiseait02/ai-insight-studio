@@ -123,7 +123,7 @@ function Portfolio() {
           <a href="#top" className="font-script text-3xl font-bold text-white">
             P N Khushi
           </a>
-          <div className="hidden gap-8 text-sm font-medium text-slate-300 md:flex">
+          <div className="flex flex-wrap items-center justify-end gap-2 text-[10px] font-medium text-slate-300 sm:gap-4 sm:text-xs md:gap-8 md:text-sm">
             <a href="#top" className="transition-colors hover:text-accent-violet-glow">
               Home
             </a>
