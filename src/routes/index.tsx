@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   ArrowRight,
@@ -10,6 +11,8 @@ import {
   Brain,
   Zap,
   Database,
+  Menu,
+  X,
 } from "lucide-react";
 import avatarGlow from "@/assets/avatar-glow.png";
 import neuroScanHero from "@/assets/gyenoproj.jpeg";
@@ -115,15 +118,28 @@ const spotlights = [
 ];
 
 function Portfolio() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen overflow-x-hidden bg-core-bg font-sans text-slate-300 selection:bg-accent-violet/40 selection:text-white">
       {/* NAV */}
       <nav className="fixed top-0 z-50 w-full bg-core-bg/70 backdrop-blur-md">
-        <div className="mx-auto flex h-20 w-full max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
+        <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-4 sm:px-6">
           <a href="#top" className="shrink-0 font-script text-2xl font-bold text-white sm:text-3xl">
             P N Khushi
           </a>
-          <div className="flex min-w-0 flex-1 items-center justify-end gap-3 overflow-x-auto whitespace-nowrap text-xs font-medium text-slate-300 sm:gap-4 sm:text-sm md:gap-8 md:text-base">
+
+          <button
+            type="button"
+            aria-label="Open navigation menu"
+            aria-expanded={isMenuOpen}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-slate-200 transition-colors hover:bg-white/5 hover:text-white md:hidden"
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+          >
+            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+
+          <div className="hidden items-center gap-8 text-sm font-medium text-slate-300 md:flex">
             <a href="#top" className="transition-colors hover:text-accent-violet-glow">
               Home
             </a>
@@ -141,6 +157,48 @@ function Portfolio() {
             </a>
           </div>
         </div>
+
+        {isMenuOpen && (
+          <div className="border-t border-white/10 bg-core-bg/95 px-4 py-3 md:hidden">
+            <div className="mx-auto flex max-w-6xl flex-col gap-3">
+              <a
+                href="#top"
+                className="rounded-md px-3 py-2 text-sm font-medium text-slate-200 transition-colors hover:bg-white/5 hover:text-accent-violet-glow"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Home
+              </a>
+              <a
+                href="#about"
+                className="rounded-md px-3 py-2 text-sm font-medium text-slate-200 transition-colors hover:bg-white/5 hover:text-accent-violet-glow"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                About
+              </a>
+              <a
+                href="#work"
+                className="rounded-md px-3 py-2 text-sm font-medium text-slate-200 transition-colors hover:bg-white/5 hover:text-accent-violet-glow"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Experience
+              </a>
+              <a
+                href="#projects"
+                className="rounded-md px-3 py-2 text-sm font-medium text-slate-200 transition-colors hover:bg-white/5 hover:text-accent-violet-glow"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Projects
+              </a>
+              <a
+                href="#contact"
+                className="rounded-md px-3 py-2 text-sm font-medium text-slate-200 transition-colors hover:bg-white/5 hover:text-accent-violet-glow"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Contact
+              </a>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* HERO */}
