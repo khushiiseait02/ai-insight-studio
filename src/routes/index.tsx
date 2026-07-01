@@ -11,7 +11,6 @@ import {
   Brain,
   Zap,
   Database,
-  Menu,
   X,
 } from "lucide-react";
 import avatarGlow from "@/assets/avatar-glow.png";
@@ -136,7 +135,16 @@ function Portfolio() {
             className="inline-flex h-10 w-10 items-center justify-center rounded-md text-slate-200 transition-colors hover:bg-white/5 hover:text-white md:hidden"
             onClick={() => setIsMenuOpen((prev) => !prev)}
           >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            <span className="sr-only">Open navigation menu</span>
+            {isMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <span className="flex h-5 w-6 flex-col justify-between">
+                <span className="h-0.5 w-full rounded-full bg-current" />
+                <span className="h-0.5 w-full rounded-full bg-current" />
+                <span className="h-0.5 w-full rounded-full bg-current" />
+              </span>
+            )}
           </button>
 
           <div className="hidden items-center gap-8 text-sm font-medium text-slate-300 md:flex">
