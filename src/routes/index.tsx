@@ -119,11 +119,11 @@ function Portfolio() {
     <div className="min-h-screen overflow-x-hidden bg-core-bg font-sans text-slate-300 selection:bg-accent-violet/40 selection:text-white">
       {/* NAV */}
       <nav className="fixed top-0 z-50 w-full bg-core-bg/70 backdrop-blur-md">
-        <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-6">
-          <a href="#top" className="font-script text-3xl font-bold text-white">
+        <div className="mx-auto flex h-20 w-full max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
+          <a href="#top" className="shrink-0 font-script text-2xl font-bold text-white sm:text-3xl">
             P N Khushi
           </a>
-          <div className="flex flex-wrap items-center justify-end gap-2 text-[10px] font-medium text-slate-300 sm:gap-4 sm:text-xs md:gap-8 md:text-sm">
+          <div className="flex min-w-0 flex-1 items-center justify-end gap-3 overflow-x-auto whitespace-nowrap text-xs font-medium text-slate-300 sm:gap-4 sm:text-sm md:gap-8 md:text-base">
             <a href="#top" className="transition-colors hover:text-accent-violet-glow">
               Home
             </a>
