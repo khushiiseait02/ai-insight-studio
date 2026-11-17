@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   ArrowRight,
@@ -13,6 +13,7 @@ import {
   Database,
   X,
 } from "lucide-react";
+import { NetworkBackground } from "@/components/NetworkBackground";
 import avatarGlow from "@/assets/avatar-glow.png";
 import neuroScanHero from "@/assets/gyenoproj.jpeg";
 import eduHubHero from "../assets/Education.jpeg";
@@ -118,13 +119,65 @@ const spotlights = [
 
 function Portfolio() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isRevealReady, setIsRevealReady] = useState(false);
+
+  useEffect(() => {
+    const revealElements = document.querySelectorAll<HTMLElement>("[data-reveal]");
+
+    if (!("IntersectionObserver" in window)) {
+      revealElements.forEach((element) => {
+        element.dataset.revealed = "true";
+      });
+      setIsRevealReady(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries, currentObserver) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.target instanceof HTMLElement) {
+            entry.target.dataset.revealed = "true";
+            currentObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+    );
+
+    const revealVisibleElements = () => {
+      revealElements.forEach((element) => {
+        const bounds = element.getBoundingClientRect();
+        if (bounds.bottom > 0 && bounds.top < window.innerHeight) {
+          element.dataset.revealed = "true";
+          observer.unobserve(element);
+        }
+      });
+    };
+
+    revealElements.forEach((element) => observer.observe(element));
+    window.addEventListener("scroll", revealVisibleElements, { passive: true });
+    window.addEventListener("resize", revealVisibleElements);
+    revealVisibleElements();
+    setIsRevealReady(true);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", revealVisibleElements);
+      window.removeEventListener("resize", revealVisibleElements);
+    };
+  }, []);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-core-bg font-sans text-slate-300 selection:bg-accent-violet/40 selection:text-white">
+    <div
+      data-reveal-ready={isRevealReady || undefined}
+      className="isolate min-h-screen overflow-x-hidden bg-core-bg font-sans text-stone-700 selection:bg-accent-violet/40 selection:text-white"
+    >
+      <NetworkBackground />
+      <div className="relative z-10">
       {/* NAV */}
       <nav className="fixed top-0 z-50 w-full bg-core-bg/70 backdrop-blur-md">
-        <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-4 sm:px-6">
-          <a href="#top" className="shrink-0 font-script text-2xl font-bold text-white sm:text-3xl">
+        <div className="mx-auto flex h-20 max-w-screen-2xl items-center justify-between px-4 sm:px-6">
+          <a href="#top" className="shrink-0 font-script text-3xl font-bold text-stone-900 sm:text-4xl">
             P N Khushi
           </a>
 
@@ -132,7 +185,7 @@ function Portfolio() {
             type="button"
             aria-label="Open navigation menu"
             aria-expanded={isMenuOpen}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-slate-200 transition-colors hover:bg-white/5 hover:text-white md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-stone-800 transition-colors hover:bg-black/5 hover:text-stone-900 md:hidden"
             onClick={() => setIsMenuOpen((prev) => !prev)}
           >
             <span className="sr-only">Open navigation menu</span>
@@ -147,7 +200,7 @@ function Portfolio() {
             )}
           </button>
 
-          <div className="hidden items-center gap-8 text-sm font-medium text-slate-300 md:flex">
+          <div className="hidden items-center gap-8 text-lg font-medium text-stone-700 md:flex">
             <a href="#top" className="transition-colors hover:text-accent-violet-glow">
               Home
             </a>
@@ -167,39 +220,39 @@ function Portfolio() {
         </div>
 
         {isMenuOpen && (
-          <div className="border-t border-white/10 bg-core-bg/95 px-4 py-3 md:hidden">
-            <div className="mx-auto flex max-w-6xl flex-col gap-3">
+          <div className="border-t border-black/10 bg-core-bg/95 px-4 py-3 md:hidden">
+            <div className="mx-auto flex max-w-screen-2xl flex-col gap-3">
               <a
                 href="#top"
-                className="rounded-md px-3 py-2 text-sm font-medium text-slate-200 transition-colors hover:bg-white/5 hover:text-accent-violet-glow"
+                className="rounded-md px-3 py-2 text-base font-medium text-stone-800 transition-colors hover:bg-black/5 hover:text-accent-violet-glow"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Home
               </a>
               <a
                 href="#about"
-                className="rounded-md px-3 py-2 text-sm font-medium text-slate-200 transition-colors hover:bg-white/5 hover:text-accent-violet-glow"
+                className="rounded-md px-3 py-2 text-base font-medium text-stone-800 transition-colors hover:bg-black/5 hover:text-accent-violet-glow"
                 onClick={() => setIsMenuOpen(false)}
               >
                 About
               </a>
               <a
                 href="#work"
-                className="rounded-md px-3 py-2 text-sm font-medium text-slate-200 transition-colors hover:bg-white/5 hover:text-accent-violet-glow"
+                className="rounded-md px-3 py-2 text-base font-medium text-stone-800 transition-colors hover:bg-black/5 hover:text-accent-violet-glow"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Experience
               </a>
               <a
                 href="#projects"
-                className="rounded-md px-3 py-2 text-sm font-medium text-slate-200 transition-colors hover:bg-white/5 hover:text-accent-violet-glow"
+                className="rounded-md px-3 py-2 text-base font-medium text-stone-800 transition-colors hover:bg-black/5 hover:text-accent-violet-glow"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Projects
               </a>
               <a
                 href="#contact"
-                className="rounded-md px-3 py-2 text-sm font-medium text-slate-200 transition-colors hover:bg-white/5 hover:text-accent-violet-glow"
+                className="rounded-md px-3 py-2 text-base font-medium text-stone-800 transition-colors hover:bg-black/5 hover:text-accent-violet-glow"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Contact
@@ -211,21 +264,21 @@ function Portfolio() {
 
       {/* HERO */}
       <section id="top" className="relative px-6 pt-32 pb-24 md:pt-40 md:pb-32">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 md:grid-cols-2">
+        <div className="mx-auto grid max-w-screen-2xl items-center gap-12 md:grid-cols-2 xl:grid-cols-[0.46fr_0.54fr]">
           {/* Avatar with glow */}
-          <div className="relative flex justify-center md:justify-start">
-            <div className="absolute inset-0 -z-10 mx-auto h-[420px] w-[420px] translate-y-6 rounded-full bg-accent-violet/30 blur-[100px]" />
+          <div data-reveal className="relative flex justify-center md:justify-start">
+            <div className="absolute inset-0 -z-10 mx-auto h-[420px] w-[420px] translate-y-6 rounded-full bg-accent-violet/30 blur-[100px] md:h-[460px] md:w-[460px] xl:h-[520px] xl:w-[520px] 2xl:h-[600px] 2xl:w-[600px]" />
             <img
               src={avatarGlow}
               alt="Avatar of an Information Science engineer working on a laptop"
               width={1024}
               height={1024}
-              className="relative h-[380px] w-[380px] object-contain md:h-[460px] md:w-[460px]"
+              className="image-blend relative h-[380px] w-[380px] rounded-3xl border border-stone-800/10 object-contain shadow-xl md:h-[460px] md:w-[460px] xl:h-[520px] xl:w-[520px] 2xl:h-[560px] 2xl:w-[560px]"
             />
           </div>
 
           {/* Headline */}
-          <div className="relative">
+          <div data-reveal className="relative">
             {/* Hello callout */}
             <div className="mb-6 flex items-center gap-3">
               <svg
@@ -233,7 +286,7 @@ function Portfolio() {
                 height="40"
                 viewBox="0 0 60 40"
                 fill="none"
-                className="-scale-x-100 text-slate-400"
+                className="-scale-x-100 text-stone-500"
                 aria-hidden
               >
                 <path
@@ -244,16 +297,18 @@ function Portfolio() {
                   fill="none"
                 />
               </svg>
-              <span className="text-base text-slate-300">
+              <span className="text-base text-stone-700">
                 Hello! I Am{" "}
                 <span className="font-semibold text-accent-violet-glow">P N Khushi</span>
               </span>
             </div>
 
-            <p className="mb-3 font-script text-3xl text-slate-400">An Engineer who</p>
+            <p className="mb-3 font-script text-3xl text-stone-500">An Engineer who</p>
 
-            <h1 className="font-display text-5xl font-bold leading-[1.05] tracking-tight text-white md:text-7xl">
-              Builds the{" "}
+            <h1 className="font-display text-5xl font-bold leading-[1.05] tracking-tight text-stone-900 md:text-7xl xl:text-[5.5rem] 2xl:text-[6rem]">
+              Builds the
+              <br className="hidden xl:block" />
+              {" "}
               <span className="relative inline-block">
                 <span className="relative z-10 bg-gradient-to-r from-accent-violet-glow to-accent-violet bg-clip-text text-transparent">
                   future
@@ -270,7 +325,7 @@ function Portfolio() {
                     cy="40"
                     rx="92"
                     ry="32"
-                    stroke="#a855f7"
+                    stroke="#a64e37"
                     strokeOpacity="0.5"
                     strokeWidth="2"
                     fill="none"
@@ -283,7 +338,7 @@ function Portfolio() {
               at a time<span className="text-accent-violet">.</span>
             </h1>
 
-            <p className="mt-6 max-w-md text-base leading-relaxed text-slate-400">
+            <p className="mt-6 max-w-md text-base leading-relaxed text-stone-600">
               Because a system shouldn't just run flawlessly—it should look unforgettable.
             </p>
           </div>
@@ -292,19 +347,19 @@ function Portfolio() {
 
       {/* ABOUT */}
       <section id="about" className="px-6 py-20">
-        <div className="mx-auto max-w-4xl">
-          <h2 className="mb-8 font-display text-4xl font-bold text-white md:text-5xl">
+        <div data-reveal className="mx-auto max-w-4xl">
+          <h2 className="mb-8 font-display text-4xl font-bold text-stone-900 md:text-5xl">
             I'm a Software Engineer<span className="ml-1 inline-block h-12 w-[3px] animate-pulse bg-accent-violet-glow align-middle" />
           </h2>
-          <p className="mb-6 text-lg leading-relaxed text-slate-300">
+          <p className="mb-6 text-lg leading-relaxed text-stone-700">
             Currently, I'm a{" "}
-            <span className="font-semibold text-white">Python Full-Stack Intern</span> at{" "}
+            <span className="font-semibold text-stone-900">Python Full-Stack Intern</span> at{" "}
             <span className="inline-flex items-center gap-2 rounded-md bg-accent-violet/10 px-2 py-0.5 font-semibold text-accent-violet-glow">
               Dhee Coding Lab
             </span>
             , building production web apps and data systems.
           </p>
-          <p className="max-w-2xl text-base leading-relaxed text-slate-400">
+          <p className="max-w-2xl text-base leading-relaxed text-stone-600">
             A self-taught designer and Information Science engineer, working at the seam of
             deep learning and full-stack engineering for the last 3+ years. I build meaningful,
             delightful digital products that hold the line between user needs and business goals.
@@ -314,7 +369,7 @@ function Portfolio() {
 
       {/* HIGHLIGHTS */}
       <section className="px-6 pb-8">
-        <div className="mx-auto grid max-w-6xl gap-4 md:grid-cols-3">
+        <div className="mx-auto grid max-w-screen-2xl gap-4 md:grid-cols-3">
           {[
             { value: "3+", label: "Years building experiences" },
             { value: "5+", label: "Projects" },
@@ -322,10 +377,11 @@ function Portfolio() {
           ].map((item) => (
             <div
               key={item.label}
-              className="rounded-2xl border border-white/5 bg-surface/70 px-6 py-6 text-center"
+              data-reveal
+              className="motion-card rounded-2xl border border-black/5 bg-surface/70 px-6 py-6 text-center"
             >
-              <div className="font-display text-4xl font-bold text-white">{item.value}</div>
-              <div className="mt-2 text-sm text-slate-400">{item.label}</div>
+              <div className="font-display text-4xl font-bold text-stone-900">{item.value}</div>
+              <div className="mt-2 text-sm text-stone-600">{item.label}</div>
             </div>
           ))}
         </div>
@@ -333,15 +389,16 @@ function Portfolio() {
 
       {/* WORK EXPERIENCE */}
       <section id="work" className="px-6 py-20">
-        <div className="mx-auto max-w-7xl">
-          <h2 className="mb-12 font-display text-3xl font-bold text-white md:text-4xl">
+        <div className="mx-auto max-w-screen-2xl">
+          <h2 className="mb-12 font-display text-3xl font-bold text-stone-900 md:text-4xl">
             Work Experience
           </h2>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-1 lg:grid-cols-1">
             {workExperience.map((p) => (
               <article
                 key={p.title}
-                className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/5 bg-surface transition-all hover:-translate-y-1 hover:border-accent-violet/40 lg:flex-row"
+                data-reveal
+                className="group relative flex flex-col overflow-hidden rounded-2xl border border-black/10 bg-surface transition-all hover:-translate-y-1 hover:border-accent-violet/40 lg:flex-row"
               >
                 <div className="relative aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-accent-violet/30 via-surface-2 to-core-bg lg:w-[42%] lg:aspect-auto">
                   {p.image ? (
@@ -365,15 +422,15 @@ function Portfolio() {
                   <span className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-accent-violet-glow">
                     {p.tag}
                   </span>
-                  <h3 className="mb-3 font-display text-lg font-bold leading-snug text-white">
+                  <h3 className="mb-3 font-display text-2xl font-bold leading-snug text-stone-900 md:text-[1.75rem]">
                     {p.title}
                   </h3>
-                  <p className="mb-6 flex-1 text-sm leading-relaxed text-slate-400">
+                  <p className="mb-6 flex-1 text-base leading-relaxed text-stone-600 md:text-lg">
                     {p.description}
                   </p>
                   <a
                     href="#"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.15em] text-white transition-colors hover:text-accent-violet-glow"
+                    className="inline-flex items-center gap-1.5 text-sm font-bold uppercase tracking-[0.15em] text-stone-900 transition-colors hover:text-accent-violet-glow"
                   >
                     Learn More <ArrowRight className="size-3.5" />
                   </a>
@@ -386,12 +443,12 @@ function Portfolio() {
 
       {/* AVAILABILITY BANNER */}
       <section className="px-6 py-20">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="font-display text-2xl leading-relaxed text-slate-300 md:text-3xl">
+        <div data-reveal className="mx-auto max-w-4xl text-center">
+          <p className="font-display text-2xl leading-relaxed text-stone-700 md:text-3xl">
             I'm currently looking to join a{" "}
-            <span className="text-white">cross-functional team</span>
+            <span className="text-stone-900">cross-functional team</span>
           </p>
-          <p className="mt-3 text-lg text-slate-500">
+          <p className="mt-3 text-lg text-stone-500">
             that values improving people's lives through accessible, thoughtful design.
           </p>
         </div>
@@ -399,9 +456,9 @@ function Portfolio() {
 
       {/* SKILLS */}
       <section className="px-6 py-20">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-screen-2xl">
           <p className="mb-2 font-script text-2xl text-accent-violet-glow">What I do</p>
-          <h2 className="mb-12 font-display text-3xl font-bold text-white md:text-4xl">
+          <h2 className="mb-12 font-display text-3xl font-bold text-stone-900 md:text-4xl">
             Three disciplines, one workflow.
           </h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -410,13 +467,14 @@ function Portfolio() {
               return (
                 <div
                   key={s.title}
-                  className="rounded-2xl border border-white/5 bg-surface p-8 transition-colors hover:border-accent-violet/40"
+                  data-reveal
+                  className="motion-card rounded-2xl border border-black/5 bg-surface p-8 transition-all duration-300 hover:border-accent-violet/40"
                 >
                   <div className="mb-6 flex size-12 items-center justify-center rounded-xl bg-accent-violet/15 text-accent-violet-glow">
                     <Icon className="size-6" />
                   </div>
-                  <h3 className="mb-3 font-display text-xl font-bold text-white">{s.title}</h3>
-                  <p className="text-sm leading-relaxed text-slate-400">{s.description}</p>
+                  <h3 className="mb-3 font-display text-xl font-bold text-stone-900">{s.title}</h3>
+                  <p className="text-sm leading-relaxed text-stone-600">{s.description}</p>
                 </div>
               );
             })}
@@ -426,23 +484,23 @@ function Portfolio() {
 
       {/* FEATURED PROJECTS */}
       <section className="px-6 py-20">
-        <div className="mx-auto max-w-6xl space-y-24">
+        <div className="mx-auto max-w-screen-2xl space-y-24">
           {featuredProjects.map((p) => (
-            <div key={p.title} className="grid items-center gap-10 md:grid-cols-2">
+            <div data-reveal key={p.title} className="grid items-center gap-10 md:grid-cols-2">
               <div>
                 <p className="mb-3 font-script text-2xl text-accent-violet-glow">{p.label}</p>
-                <h3 className="mb-5 font-display text-3xl font-bold leading-tight text-white md:text-4xl">
+                <h3 className="mb-5 font-display text-3xl font-bold leading-tight text-stone-900 md:text-4xl">
                   {p.title}
                 </h3>
-                <p className="mb-8 text-base leading-relaxed text-slate-400">{p.description}</p>
+                <p className="mb-8 text-base leading-relaxed text-stone-600">{p.description}</p>
                 <a
                   href={p.link}
-                  className="inline-flex items-center gap-2 rounded-full border border-accent-violet/40 bg-accent-violet/10 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-violet/20"
+                  className="inline-flex items-center gap-2 rounded-full border border-accent-violet/40 bg-accent-violet/10 px-6 py-3 text-sm font-semibold text-stone-900 transition-colors hover:bg-accent-violet/20"
                 >
                   Visit project <ArrowUpRight className="size-4" />
                 </a>
               </div>
-              <div className="group overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/8 to-white/2 shadow-[0_0_0_1px_rgba(255,255,255,0.02),0_18px_60px_-24px_rgba(168,85,247,0.65)]">
+              <div className="group overflow-hidden rounded-3xl border border-black/10 bg-gradient-to-br from-black/5 to-transparent shadow-[0_0_0_1px_rgba(61,40,33,0.06),0_18px_60px_-24px_rgba(166,78,55,0.3)]">
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-t from-core-bg/60 via-transparent to-transparent" />
                   <img
@@ -451,7 +509,7 @@ function Portfolio() {
                     width={1280}
                     height={960}
                     loading="lazy"
-                    className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="image-blend aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
               </div>
@@ -467,17 +525,18 @@ function Portfolio() {
                 return (
                   <div
                     key={s.title}
-                    className="flex items-start gap-4 rounded-2xl border border-white/5 bg-surface p-6"
+                    data-reveal
+                    className="motion-card flex items-start gap-4 rounded-2xl border border-black/5 bg-surface p-6"
                   >
                     <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-accent-violet/15 text-accent-violet-glow">
                       <Icon className="size-5" />
                     </div>
                     <div>
-                      <h4 className="font-display text-lg font-bold text-white">{s.title}</h4>
-                      <p className="text-xs uppercase tracking-[0.15em] text-slate-500">
+                      <h4 className="font-display text-lg font-bold text-stone-900">{s.title}</h4>
+                      <p className="text-xs uppercase tracking-[0.15em] text-stone-500">
                         {s.tech}
                       </p>
-                      <p className="mt-2 text-sm leading-relaxed text-slate-400">
+                      <p className="mt-2 text-sm leading-relaxed text-stone-600">
                         {s.description}
                       </p>
                     </div>
@@ -492,31 +551,31 @@ function Portfolio() {
       {/* CONTACT */}
       <section id="contact" className="relative px-6 py-24">
         <div className="absolute inset-x-0 top-0 -z-10 mx-auto h-96 max-w-3xl rounded-full bg-accent-violet/20 blur-[120px]" />
-        <div className="mx-auto max-w-4xl text-center">
+        <div data-reveal className="mx-auto max-w-4xl text-center">
           <p className="mb-3 font-script text-3xl text-accent-violet-glow">Let's Connect</p>
-          <h2 className="mb-6 font-display text-4xl font-bold leading-tight text-white md:text-6xl">
+          <h2 className="mb-6 font-display text-4xl font-bold leading-tight text-stone-900 md:text-6xl">
             Let’s Connect and Create Something Meaningful
           </h2>
-          <p className="mx-auto mb-10 max-w-2xl text-base text-slate-400">
+          <p className="mx-auto mb-10 max-w-2xl text-base text-stone-600">
             Open to roles, collaborations, and meaningful product work. If you have a problem worth
             solving, I’d love to hear about it.
           </p>
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
               href="mailto:khushiise024@gmail.com"
-              className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-4 text-sm font-bold text-core-bg transition-colors hover:bg-accent-violet-glow hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full bg-accent-violet px-8 py-4 text-sm font-bold text-white transition-colors hover:bg-accent-violet-glow"
             >
               Email <ArrowUpRight className="size-4" />
             </a>
             <a
               href="https://www.linkedin.com/in/khushipn"
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-8 py-4 text-sm font-bold text-white transition-colors hover:border-accent-violet/40 hover:bg-accent-violet/10"
+              className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-black/5 px-8 py-4 text-sm font-bold text-stone-800 transition-colors hover:border-accent-violet/40 hover:bg-accent-violet/10"
             >
               LinkedIn <ArrowUpRight className="size-4" />
             </a>
             <a
               href="https://github.com/khushiiseait02"
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-8 py-4 text-sm font-bold text-white transition-colors hover:border-accent-violet/40 hover:bg-accent-violet/10"
+              className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-black/5 px-8 py-4 text-sm font-bold text-stone-800 transition-colors hover:border-accent-violet/40 hover:bg-accent-violet/10"
             >
               GitHub <ArrowUpRight className="size-4" />
             </a>
@@ -525,10 +584,10 @@ function Portfolio() {
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-white/5 px-6 py-10">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 md:flex-row">
-          <span className="font-script text-2xl text-white">P N Khushi</span>
-          <div className="text-xs uppercase tracking-[0.2em] text-slate-500">
+      <footer className="border-t border-black/10 px-6 py-10">
+        <div data-reveal className="mx-auto flex max-w-screen-2xl flex-col items-center justify-between gap-6 md:flex-row">
+          <span className="font-script text-2xl text-stone-900">P N Khushi</span>
+          <div className="text-xs uppercase tracking-[0.2em] text-stone-500">
             © 2026 — Khushi P N. All rights reserved.
           </div>
           <div className="flex gap-3">
@@ -541,7 +600,7 @@ function Portfolio() {
                 key={label}
                 href={href}
                 aria-label={label}
-                className="flex size-10 items-center justify-center rounded-full bg-white/5 text-slate-400 transition-colors hover:bg-accent-violet hover:text-white"
+                className="flex size-10 items-center justify-center rounded-full bg-black/5 text-stone-600 transition-colors hover:bg-accent-violet hover:text-white"
               >
                 <Icon className="size-4" />
               </a>
@@ -549,6 +608,7 @@ function Portfolio() {
           </div>
         </div>
       </footer>
+      </div>
     </div>
   );
 }
