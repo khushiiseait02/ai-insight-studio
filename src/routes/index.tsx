@@ -176,7 +176,7 @@ function Portfolio() {
       <div className="relative z-10">
       {/* NAV */}
       <nav className="fixed top-0 z-50 w-full bg-core-bg/70 backdrop-blur-md">
-        <div className="mx-auto flex h-20 max-w-screen-2xl items-center justify-between px-4 sm:px-6">
+        <div className="mx-auto flex h-20 max-w-screen-xl items-center justify-between px-4 sm:px-6">
           <a href="#top" className="shrink-0 font-script text-3xl font-bold text-stone-900 sm:text-4xl">
             P N Khushi
           </a>
@@ -221,7 +221,7 @@ function Portfolio() {
 
         {isMenuOpen && (
           <div className="border-t border-black/10 bg-core-bg/95 px-4 py-3 md:hidden">
-            <div className="mx-auto flex max-w-screen-2xl flex-col gap-3">
+            <div className="mx-auto flex max-w-screen-xl flex-col gap-3">
               <a
                 href="#top"
                 className="rounded-md px-3 py-2 text-base font-medium text-stone-800 transition-colors hover:bg-black/5 hover:text-accent-violet-glow"
@@ -264,7 +264,7 @@ function Portfolio() {
 
       {/* HERO */}
       <section id="top" className="relative px-6 pt-32 pb-24 md:pt-40 md:pb-32">
-        <div className="mx-auto grid max-w-screen-2xl items-center gap-12 md:grid-cols-2 xl:grid-cols-[0.46fr_0.54fr]">
+        <div className="mx-auto grid max-w-screen-xl items-center gap-12 md:grid-cols-2 xl:grid-cols-[0.46fr_0.54fr]">
           {/* Avatar with glow */}
           <div data-reveal className="relative flex justify-center md:justify-start">
             <div className="absolute inset-0 -z-10 mx-auto h-[420px] w-[420px] translate-y-6 rounded-full bg-accent-violet/30 blur-[100px] md:h-[460px] md:w-[460px] xl:h-[520px] xl:w-[520px] 2xl:h-[600px] 2xl:w-[600px]" />
@@ -369,7 +369,7 @@ function Portfolio() {
 
       {/* HIGHLIGHTS */}
       <section className="px-6 pb-8">
-        <div className="mx-auto grid max-w-screen-2xl gap-4 md:grid-cols-3">
+        <div className="mx-auto grid max-w-screen-xl gap-4 md:grid-cols-3">
           {[
             { value: "3+", label: "Years building experiences" },
             { value: "5+", label: "Projects" },
@@ -389,7 +389,7 @@ function Portfolio() {
 
       {/* WORK EXPERIENCE */}
       <section id="work" className="px-6 py-20">
-        <div className="mx-auto max-w-screen-2xl">
+        <div className="mx-auto max-w-screen-xl">
           <h2 className="mb-12 font-display text-3xl font-bold text-stone-900 md:text-4xl">
             Work Experience
           </h2>
@@ -422,15 +422,15 @@ function Portfolio() {
                   <span className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-accent-violet-glow">
                     {p.tag}
                   </span>
-                  <h3 className="mb-3 font-display text-2xl font-bold leading-snug text-stone-900 md:text-[1.75rem]">
+                  <h3 className="mb-3 font-display text-lg font-bold leading-snug text-stone-900">
                     {p.title}
                   </h3>
-                  <p className="mb-6 flex-1 text-base leading-relaxed text-stone-600 md:text-lg">
+                  <p className="mb-6 flex-1 text-sm leading-relaxed text-stone-600">
                     {p.description}
                   </p>
                   <a
                     href="#"
-                    className="inline-flex items-center gap-1.5 text-sm font-bold uppercase tracking-[0.15em] text-stone-900 transition-colors hover:text-accent-violet-glow"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.15em] text-stone-900 transition-colors hover:text-accent-violet-glow"
                   >
                     Learn More <ArrowRight className="size-3.5" />
                   </a>
@@ -456,7 +456,7 @@ function Portfolio() {
 
       {/* SKILLS */}
       <section className="px-6 py-20">
-        <div className="mx-auto max-w-screen-2xl">
+        <div className="mx-auto max-w-screen-xl">
           <p className="mb-2 font-script text-2xl text-accent-violet-glow">What I do</p>
           <h2 className="mb-12 font-display text-3xl font-bold text-stone-900 md:text-4xl">
             Three disciplines, one workflow.
@@ -484,7 +484,7 @@ function Portfolio() {
 
       {/* FEATURED PROJECTS */}
       <section className="px-6 py-20">
-        <div className="mx-auto max-w-screen-2xl space-y-24">
+        <div className="mx-auto max-w-screen-xl space-y-24">
           {featuredProjects.map((p) => (
             <div data-reveal key={p.title} className="grid items-center gap-10 md:grid-cols-2">
               <div>
@@ -585,7 +585,7 @@ function Portfolio() {
 
       {/* FOOTER */}
       <footer className="border-t border-black/10 px-6 py-10">
-        <div data-reveal className="mx-auto flex max-w-screen-2xl flex-col items-center justify-between gap-6 md:flex-row">
+        <div data-reveal className="mx-auto flex max-w-screen-xl flex-col items-center justify-between gap-6 md:flex-row">
           <span className="font-script text-2xl text-stone-900">P N Khushi</span>
           <div className="text-xs uppercase tracking-[0.2em] text-stone-500">
             © 2026 — Khushi P N. All rights reserved.
