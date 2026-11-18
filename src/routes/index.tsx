@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
-  ArrowRight,
   Github,
   Linkedin,
   Mail,
@@ -22,18 +21,19 @@ import hospitalHero from "../assets/Healthcare.jpeg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "P N Khushi — Information Science Engineer & Designer" },
+      { title: "P N Khushi — Python Full Stack Developer & AI/ML Engineer" },
       {
         name: "description",
         content:
-          "Portfolio of an Information Science engineer crafting AI-powered products and full-stack web experiences with a designer's eye.",
+          "Portfolio of P N Khushi, a Python full-stack developer building AI/ML healthcare tools and web applications.",
       },
-      { property: "og:title", content: "P N Khushi — Information Science Engineer & Designer" },
+      { property: "og:title", content: "P N Khushi — Python Full Stack Developer & AI/ML Engineer" },
       {
         property: "og:description",
         content:
-          "AI-powered products and full-stack web experiences, crafted with a designer's eye.",
+          "Python full-stack development and AI/ML projects by P N Khushi.",
       },
+      { property: "og:image", content: avatarGlow },
     ],
   }),
   component: Portfolio,
@@ -44,23 +44,27 @@ const workExperience: Array<{
   company: string;
   description: string;
   tag: string;
+  period: string;
+  location: string;
   image?: string;
 }> = [
   {
     title: "Python Full Stack Intern",
     company: "Dhee Coding Lab",
     description:
-      "Worked on full-stack web application development using Python, Django, HTML, CSS, JavaScript, and SQL. Built responsive interfaces, developed backend APIs, integrated databases, and collaborated on real-world projects following software development best practices.",
+      "• Built production web apps with Django, Flask, REST APIs, and React.js.\n• Cut page load time by 30%.\n• Implemented secure session/token authentication with MySQL.",
     tag: "Internship",
+    period: "Jan 2026 – Present",
+    location: "Bengaluru",
   },
 ];
 
 const featuredProjects = [
   {
     label: "Featured Project",
-    title: "AI-Powered Gynecological Diagnostics",
+    title: "AI-Powered Gynaecological Diagnostics",
     description:
-      "An AI-powered gynecological disease diagnosis platform that analyzes ultrasound and medical images using deep learning to detect PCOS and ovarian cancer, complemented by an intelligent chatbot for symptom guidance and patient support.",
+      "An educational AI diagnostics prototype that uses CNN/ResNet deep-learning models for PCOS and ovarian cancer image classification, reaching 98% accuracy, with Flask, SQLite, and an NLP-based gynaecological guidance chatbot. Built with Python, Flask, CNN/ResNet, and SQLite. Not a clinical tool.",
     link: "https://github.com/khushiiseait02/gyneo",
     image: neuroScanHero,
   },
@@ -68,7 +72,7 @@ const featuredProjects = [
     label: "Featured Project",
     title: "Edu Hub",
     description:
-      "A full-stack e-learning platform that enables students to access courses, track learning progress, and interact with educational content through a responsive and user-friendly web interface.",
+      "A Django platform for educational resources, events, and job listings, with authentication, role-based access control, and responsive dashboards.",
     link: "https://github.com/khushiiseait02/EDU-HUB-",
     image: eduHubHero,
   },
@@ -76,7 +80,7 @@ const featuredProjects = [
     label: "Featured Project",
     title: "Hospital Management System",
     description:
-      "A comprehensive hospital management web application that streamlines patient records, appointments, billing, authentication, and administrative workflows through a secure and intuitive interface.",
+      "A Python and Flask hospital management application with SQLite, supporting patient records, appointments, billing, authentication, and administrative workflows.",
     link: "https://github.com/khushiiseait02/Hospital_Management_System",
     image: hospitalHero,
   },
@@ -92,13 +96,18 @@ const skills = [
   {
     title: "Frontend Technologies",
     icon: Brain,
-    description: " HTML, CSS, JavaScript,React responsive UI development.",
+    description: "HTML, CSS, JavaScript, and React for responsive UI development.",
   },
  
   {
     title: "Database & Data Management",
     icon: Database,
     description: "SQL, relational databases, schema design, data modeling, and efficient query handling.",
+  },
+  {
+    title: "AI / Machine Learning",
+    icon: Sparkles,
+    description: "Deep Learning, CNN/ResNet, NLP, image classification, model training, and inference.",
   },
 ];
 
@@ -341,6 +350,13 @@ function Portfolio() {
             <p className="mt-6 max-w-md text-base leading-relaxed text-stone-600">
               Because a system shouldn't just run flawlessly—it should look unforgettable.
             </p>
+            <a
+              href="/Khushi-resume-2026.pdf"
+              download
+              className="mt-6 inline-flex items-center gap-2 rounded-full bg-accent-violet px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-accent-violet-glow"
+            >
+              Download Resume <ArrowUpRight className="size-4" />
+            </a>
           </div>
         </div>
       </section>
@@ -349,7 +365,7 @@ function Portfolio() {
       <section id="about" className="px-6 py-20">
         <div data-reveal className="mx-auto max-w-4xl">
           <h2 className="mb-8 font-display text-4xl font-bold text-stone-900 md:text-5xl">
-            I'm a Software Engineer<span className="ml-1 inline-block h-12 w-[3px] animate-pulse bg-accent-violet-glow align-middle" />
+            I'm a Python Full Stack Developer<span className="ml-1 inline-block h-12 w-[3px] animate-pulse bg-accent-violet-glow align-middle" />
           </h2>
           <p className="mb-6 text-lg leading-relaxed text-stone-700">
             Currently, I'm a{" "}
@@ -360,9 +376,9 @@ function Portfolio() {
             , building production web apps and data systems.
           </p>
           <p className="max-w-2xl text-base leading-relaxed text-stone-600">
-            A self-taught designer and Information Science engineer, working at the seam of
-            deep learning and full-stack engineering for the last 3+ years. I build meaningful,
-            delightful digital products that hold the line between user needs and business goals.
+            An Information Science engineering graduate, working at the seam of deep learning
+            and full-stack engineering. I build practical, accessible products that connect
+            reliable backend systems with thoughtful user experiences.
           </p>
         </div>
       </section>
@@ -371,8 +387,8 @@ function Portfolio() {
       <section className="px-6 pb-8">
         <div className="mx-auto grid max-w-screen-xl gap-4 md:grid-cols-3">
           {[
-            { value: "3+", label: "Years building experiences" },
-            { value: "5+", label: "Projects" },
+            { value: "4", label: "Years of engineering studies, 2022–2026" },
+            { value: "5", label: "Projects" },
             { value: "AI + Web", label: "Hybrid expertise in ML systems and full-stack apps" },
           ].map((item) => (
             <div
@@ -425,15 +441,12 @@ function Portfolio() {
                   <h3 className="mb-3 font-display text-lg font-bold leading-snug text-stone-900">
                     {p.title}
                   </h3>
-                  <p className="mb-6 flex-1 text-sm leading-relaxed text-stone-600">
+                  <p className="mb-2 text-xs font-medium text-stone-500">
+                    {p.company} · {p.period} · {p.location}
+                  </p>
+                  <p className="mb-6 flex-1 whitespace-pre-line text-sm leading-relaxed text-stone-600">
                     {p.description}
                   </p>
-                  <a
-                    href="#"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-[0.15em] text-stone-900 transition-colors hover:text-accent-violet-glow"
-                  >
-                    Learn More <ArrowRight className="size-3.5" />
-                  </a>
                 </div>
               </article>
             ))}
@@ -459,9 +472,9 @@ function Portfolio() {
         <div className="mx-auto max-w-screen-xl">
           <p className="mb-2 font-script text-2xl text-accent-violet-glow">What I do</p>
           <h2 className="mb-12 font-display text-3xl font-bold text-stone-900 md:text-4xl">
-            Three disciplines, one workflow.
+            Four disciplines, one workflow.
           </h2>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {skills.map((s) => {
               const Icon = s.icon;
               return (
@@ -483,7 +496,7 @@ function Portfolio() {
       </section>
 
       {/* FEATURED PROJECTS */}
-      <section className="px-6 py-20">
+      <section id="projects" className="px-6 py-20">
         <div className="mx-auto max-w-screen-xl space-y-24">
           {featuredProjects.map((p) => (
             <div data-reveal key={p.title} className="grid items-center gap-10 md:grid-cols-2">
@@ -579,6 +592,13 @@ function Portfolio() {
             >
               GitHub <ArrowUpRight className="size-4" />
             </a>
+            <a
+              href="/Khushi-resume-2026.pdf"
+              download
+              className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-black/5 px-8 py-4 text-sm font-bold text-stone-800 transition-colors hover:border-accent-violet/40 hover:bg-accent-violet/10"
+            >
+              Download Resume <ArrowUpRight className="size-4" />
+            </a>
           </div>
         </div>
       </section>
@@ -588,7 +608,7 @@ function Portfolio() {
         <div data-reveal className="mx-auto flex max-w-screen-xl flex-col items-center justify-between gap-6 md:flex-row">
           <span className="font-script text-2xl text-stone-900">P N Khushi</span>
           <div className="text-xs uppercase tracking-[0.2em] text-stone-500">
-            © 2026 — Khushi P N. All rights reserved.
+            © 2026 — P N Khushi. All rights reserved.
           </div>
           <div className="flex gap-3">
             {[
